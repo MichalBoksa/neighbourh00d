@@ -10,9 +10,9 @@ import logo from '../images/logo.jpg';
 const Home = () => {
   return (
     
-    <div style={{backgroundColor:"black",height:"100vh"}}> 
+    <div style={{backgroundColor:"white",height:"100vh",boxShadow: " rgba(50, 50, 93, 0.25) 0px 70px 100px -10px inset, rgba(0, 0, 0, 0.3) 0px 68px 76px -13px inset"}}> 
 
-        <a href="https://google.com" class="button" style = {{marginLeft:"1",MarginRight:"1"}}> <img src={logo} border="0" ></img></a>
+        <a href="https://google.com" class="button"  style = {{width: "100vw",height:"60vh",justifyContent:"center", display:"flex", alignItems: "center"}}> <img src={logo}style = {{width: "60vw",boxShadow: "0px 42px 79px 4px black"}} border ="0" ></img></a>
     </div>
     // <div>
     //     <Navbar/>
