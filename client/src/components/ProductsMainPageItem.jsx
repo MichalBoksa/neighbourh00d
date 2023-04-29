@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import {mobile} from '../responsive';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
 const Image = styled.img`
@@ -56,12 +56,13 @@ const Button = styled.button`
 `;
 
 const ProductsMainPageItem = ({item}) => {
+
   return (
     <Container id={item.id}>
       {/* TODO na sztywno 2 bo jeden produkt wysiwetlany na home */}
       <Link to ={`/product`}>
         <Image id={item.id} 
-        source={{uri: `data:image/jpeg;base64,${item.img}`}}/>
+        src ={item.img}/>
         <Info id={item.id}>
           <Title>{item.title}</Title>
           <Button>ZOBACZ SZCZEGÓŁY</Button>

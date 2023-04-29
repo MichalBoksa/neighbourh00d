@@ -17,13 +17,13 @@ const ProductsMainPage = () => {
 
     //fetch only one product cuz we don't have more xd 
   const [products,setProducts] = useState([]);
-
-  const axiosInstance = axios.create({ baseURL: process.env.API_URL });
+  
+  const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 
   useEffect(() =>{
     const getProducts = async () => {
       try{
-        const res = await axiosInstance.get("products/?2");  //TODO CHECK THIS ID 2 axios check
+        const res = await axiosInstance.get("/products/find/644bfdbd1e6cf16bf1a9b361");  //TODO CHECK THIS ID 2 axios check
   
         setProducts(res.data);
       }

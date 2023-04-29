@@ -4,6 +4,7 @@ import Footer from "../components/Footer"
 import img from '../images/wspolne.jpg';
 import { Add, Remove } from "@material-ui/icons";
 import {mobile} from '../responsive';
+import {useEffect} from "react";
 
 //TODO add to cart button
 const Container = styled.div``;
@@ -43,9 +44,9 @@ const Price = styled.span`
     font-size: 40px;
 `;
 
- Image.defaultProps ={
-    src:img
-};
+//  Image.defaultProps ={
+//     src:img
+// };
 
 const FilterContainer = styled.div`
     width:50%;
@@ -113,19 +114,48 @@ const Button = styled.button`
 
 
 export const Product = () => {
+
+    
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+
+  const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
+
+  useEffect(()=> {
+    const getProduct = async () =>{
+      try{
+        const res = await axiosInstance.create({
+          baseURL: process.env.REACT_APP_API_URL }).get("/products/find/"+id);
+          setProduct((await res).data);
+      }
+      catch{}
+    };
+    getProduct();
+  },[id]);
+
+  const handleQuantity = (type) =>{
+    if (type === "desc")
+       quantity > 1 && setQuantity(quantity-1);
+    else (type === "asc")
+        setQuantity(quantity+1)
+  }
+
+
   return (
     <Container>
         <Navbar/>
         <Wrapper>
             <ImageContainer>
-                <Image></Image>
+                <Image src={product.img}></Image>
             </ImageContainer>
             <InfoContainer>
                 <Title>Test title</Title>
                 <Desc>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    {product.desc}
                 </Desc>
-                <Price>$ 20</Price>
+                <Price>{product.price} zł</Price>
                 <FilterContainer>
                     <Filter>
                     <FilterTitle>Rozmiar</FilterTitle>
