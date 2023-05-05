@@ -7,11 +7,11 @@ import {sliderItems} from "../data"
 
 const Container = styled.div`
 width: 100%;
-height: 100vh; 
+height: 80vh; 
 display: flex;
 position: relative;
 overflow: hidden;
- ${mobile({height: "85vh"})}
+ ${mobile({height: "65vh", width: "95vw"})}
 `; 
 
 const Arrow = styled.div`
@@ -35,7 +35,9 @@ z-index: 2;
 
 const Wrapper = styled.div`
 height: 100%;
+margin-top: 1.5vh;
 display: flex;
+
 transition: all 1.5s ease;
 transform: translateX(${(props)=>props.slideIndex * - 100}vw);
 `;
@@ -61,6 +63,7 @@ width:100%; img with title desc */
  width: 100vw;
 height: 100vh; 
 object-fit:cover;
+${mobile({height: "65vh"})}
 `;
 
 
@@ -106,7 +109,7 @@ const Slider = () => {
             </Arrow>
             <Wrapper slideIndex={slideIndex}>
                 {sliderItems.map(item=>(
-                <Slide bg={item.bg}>
+                <Slide bg={item.bg} key={item.id}>
                         <ImageContainer>
                             <Image src={item.img} />
                         </ImageContainer>

@@ -1,22 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Facebook, Instagram, MailOutline, Phone, Room } from '@material-ui/icons';
-import logo from '../images/logo.jpg';
 import {mobile} from '../responsive';
 
 const Container = styled.div`
     display: flex;
-    ${mobile({flexDirection:"column"})} 
+    ${mobile({flexDirection:"column", width: "95vw"})} 
     background-color:black;
     color:white;
-    
 `;
 
 const Left = styled.div`
     flex:1;
     display: flex;
     flex-direction: column;
-    padding: 5px;
+    padding: 10px;
     justify-content: center;
    
 `;
@@ -24,12 +22,13 @@ const Left = styled.div`
 const Center = styled.div`
     flex:1;
     padding:20px;
-    ${mobile({backgroundColor:"#fff8f"})} 
+    ${mobile({backgroundColor:"#fff8f",padding:"0px 20px"})};
 `;
 
 const Right = styled.div`
     flex:1;
     padding:20px;
+    ${mobile({backgroundColor:"#fff8f",padding:"10px 20px", margin: "0px 5px 0px 5px"})} 
 `;
 
 const LogoImage = styled.img`
@@ -37,27 +36,22 @@ const LogoImage = styled.img`
   /* flex: 1; */
   display: flex;
   align-content: center;
-
   
 `;
 
-LogoImage.defaultProps = {
-  src: logo,
-};
 
 const Desc = styled.p`
     font-weight: 700;
     font-size: 10px;
-    margin-left:15px;
+    margin-left:25px;
     margin-top:0;
 `
 
 const SocialContainer = styled.div`
     display: flex;
-    
     justify-content: center;
     flex-direction: column;
-
+    ${mobile({flexDirection:"row"})} 
 `;
 const ContactItem = styled.div`
     display: flex;
@@ -66,6 +60,7 @@ const ContactItem = styled.div`
 `;
 const Title = styled.h3`
     margin-bottom: 15px;
+    ${mobile({marginTop:"5px"})} 
 `;
 
 
@@ -81,6 +76,7 @@ const SocialIcon = styled.div`
     justify-content: center;
     margin-right: 5px;
     margin-bottom: 10px;
+    font-size: 23px;
 `;
 
 const TikTokIcon = ({ color = "#000000" }) => {
@@ -100,7 +96,7 @@ const Footer = () => {
   return (
     <Container>
         <Left>
-            <LogoImage/>
+            <LogoImage src ="https://firebasestorage.googleapis.com/v0/b/neighbourh00d.appspot.com/o/logo.jpg?alt=media&token=96b82788-30a5-4c5a-bfc8-20152f0232d4"/>
             <Desc>TWORZYMY UBRANIA. Z PASJĄ</Desc>
         </Left>
         <Center>

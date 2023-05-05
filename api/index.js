@@ -22,7 +22,7 @@ app.use("/api/orders", orderRoute);
 app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 
-app.listen(process.env.PORT || 5000, ()=>{
+app.listen(process.env.PORT || 8800, ()=>{
     console.log("Backend server is running!");
 });
 

@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import img from '../images/hoodieCart.jpg';
 import { Add, Remove } from "@material-ui/icons";
 import {mobile} from '../responsive';
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
 
@@ -12,6 +13,7 @@ const Container = styled.div`
 const Wrapper = styled.div`
     display:flex;
     justify-content:space-between;
+    margin-top:10px;
     ${mobile({padding:"10px",flexDirection:"column"})} 
 `;
 
@@ -93,10 +95,6 @@ const Image = styled.img`
     width:150px;
 `;
 
-Image.defaultProps ={
-    src:img
-};
-
 const ProductName = styled.span`
     
 `;
@@ -171,53 +169,42 @@ const SummaryItemPrice = styled.span`
 
 
 export const Cart = () => {
+
+    const cart = useSelector(state=>state.cart)
   return (
     <Container>
         <Navbar/>
             <Wrapper>
                 <OrderSummary>
                     <ProductList>
-                        <Product>
-                            <ProductDetail>
-                                <Image></Image>
-                                <Details>
-                                    <ProductName><b>Produkt: </b>Budo Hoodie</ProductName>
-                                    <ProductSize><b>Rozmiar: </b>M</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add/>
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove/>    
-                                </ProductAmountContainer>    
-                                <ProductPrice> 400 zł</ProductPrice>
-                            </PriceDetail>
-                        </Product>
-                        <Hr/>
-                        <Product>
-                            <ProductDetail>
-                                <Image></Image>
-                                <Details>
-                                    <ProductName><b>Produkt: </b>Budo Hoodie</ProductName>
-                                    <ProductSize><b>Rozmiar: </b>M</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add/>
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove/>    
-                                </ProductAmountContainer>    
-                                <ProductPrice> 400 zł</ProductPrice>
-                            </PriceDetail>
-                        </Product>
+                        {cart.products.map(product => ( 
+                        <><Product>
+                                <ProductDetail>
+                                    <Image src={product.img}></Image>
+                                    <Details>
+                                        <ProductName><b>Produkt: </b>{product.title}</ProductName>
+                                        <ProductSize><b>Rozmiar: </b>{product.size}</ProductSize>
+                                    </Details>
+                                </ProductDetail>
+                                <PriceDetail>
+                                    <ProductAmountContainer>
+                                        <Add />
+                                        <ProductAmount>{product.quantity}</ProductAmount>
+                                        <Remove />
+                                    </ProductAmountContainer>
+                                    <ProductPrice> {product.price * product.quantity} zł</ProductPrice>
+                                </PriceDetail>
+                            </Product><Hr /></>
+                        ))
+                        }
+                    
+                       
                     </ProductList>
                     <Summary>
                         <SummaryTitle>PODSUMOWANIE</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText type="total">KWOTA</SummaryItemText>
-                            <SummaryItemPrice>300 zł</SummaryItemPrice>
+                            <SummaryItemPrice>{cart.total} zł</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>DOSTAWA</SummaryItemText>
@@ -225,7 +212,7 @@ export const Cart = () => {
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText type="total">KWOTA DO ZAPŁATY</SummaryItemText>
-                            <SummaryItemPrice>315 zł</SummaryItemPrice>
+                            <SummaryItemPrice>{cart.total} zł + dostawa </SummaryItemPrice>
                         </SummaryItem>
                     </Summary>
                 </OrderSummary>

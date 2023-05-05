@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import {mobile} from '../responsive';
 import { Link, useLocation } from "react-router-dom";
+import {isMobile} from 'react-device-detect';
 import axios from "axios";
 
 const Image = styled.img`
@@ -9,23 +10,24 @@ width:100%;
 height:100%;
 object-fit:cover;
 visibility:${(props) => props.id != "2" && "hidden"} ;
-
 `;
 
 const Container = styled.div`
 flex:1;
 margin: 3px;
-background-color:${(props) => props.id != 2 && "white"} ;
+background-color:${(props) => props.id != "644c02c06bb82f09c5267b5b" && "none"} ;
+/* width:${(props) => props.id != "2" && "0%"} ; */
 height: 70vh;
-position: relative;
+position: relative; 
 
 &:hover ${Image}{
     opacity:0.8;
     transition: all 0.5s ease;
-}
-${mobile({height:"40vh", 
- width: `${(props) => props.id == "2" && "70vw" }`})} 
-${mobile({ position: `${(props) => props.id == "2" && "absolute" }` })} ;
+};
+${mobile({height:"40vh",margin:"auto"})}; 
+
+position: ${(props) =>( isMobile && props.id == "644c02c06bb82f09c5267b5b") && "absolute" }  ;
+width:${(props) => (props.id == "644c02c06bb82f09c5267b5b" && isMobile) && "85vw" }  ;
 `;
 
 
@@ -56,12 +58,13 @@ const Button = styled.button`
 `;
 
 const ProductsMainPageItem = ({item}) => {
-
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
   return (
-    <Container id={item.id}>
+    <Container id={item._id}>
       {/* TODO na sztywno 2 bo jeden produkt wysiwetlany na home */}
-      <Link to ={`/product`}>
-        <Image id={item.id} 
+      <Link to ={`/product/${item._id}`}>
+        <Image id={item.id}      
         src ={item.img}/>
         <Info id={item.id}>
           <Title>{item.title}</Title>

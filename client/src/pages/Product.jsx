@@ -4,7 +4,11 @@ import Footer from "../components/Footer"
 import img from '../images/wspolne.jpg';
 import { Add, Remove } from "@material-ui/icons";
 import {mobile} from '../responsive';
-import {useEffect} from "react";
+import {useEffect,useState} from "react";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import {addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 //TODO add to cart button
 const Container = styled.div``;
@@ -28,7 +32,7 @@ const Image = styled.img`
 const InfoContainer = styled.div`
     flex:1;
     padding: 0px 50px;
-    ${mobile({padding:"10px"})} 
+    ${mobile({padding:"10px", marginBottom:"10px"})} 
 `;
 
 const Title = styled.h1`
@@ -120,6 +124,8 @@ export const Product = () => {
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState("");
+  const dispatch = useDispatch();
 
   const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 
@@ -136,12 +142,16 @@ export const Product = () => {
   },[id]);
 
   const handleQuantity = (type) =>{
-    if (type === "desc")
-       quantity > 1 && setQuantity(quantity-1);
-    else (type === "asc")
+    if (type === "desc"){ quantity > 1 && setQuantity(quantity-1);}
+      
+    else if (type === "inc")
         setQuantity(quantity+1)
   }
 
+
+  const handleClick = ()=>{
+    dispatch(addProduct({...product, quantity, size}));
+  };
 
   return (
     <Container>
@@ -151,7 +161,7 @@ export const Product = () => {
                 <Image src={product.img}></Image>
             </ImageContainer>
             <InfoContainer>
-                <Title>Test title</Title>
+                <Title>{product.title}</Title>
                 <Desc>
                     {product.desc}
                 </Desc>
@@ -159,20 +169,20 @@ export const Product = () => {
                 <FilterContainer>
                     <Filter>
                     <FilterTitle>Rozmiar</FilterTitle>
-                    <FilterSize>
-                        <FilterSizeOption>S</FilterSizeOption>
-                        <FilterSizeOption>M</FilterSizeOption>
-                        <FilterSizeOption>L</FilterSizeOption>
+                    <FilterSize onChange={(e) => setSize(e.target.value)}>
+                {product.size?.map((s) => (
+                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                ))}
                     </FilterSize>
                     </Filter>
                 </FilterContainer>
                 <AddContainer>
                     <AmountContainer>
-                        <Remove/>
-                        <Amount>1</Amount>
-                        <Add/>
+                        <Remove onClick={() => handleQuantity("desc")}/>
+                        <Amount>{quantity}</Amount>
+                        <Add onClick={() => handleQuantity("inc")}/>
                     </AmountContainer>
-                    <Button>DODAJ DO KOSZYKA</Button>
+                    <Button onClick={handleClick}>DODAJ DO KOSZYKA</Button>
                 </AddContainer>
             </InfoContainer>
         </Wrapper>
@@ -181,4 +191,4 @@ export const Product = () => {
   )
 }
 
-export default Product
+export default Product;

@@ -8,14 +8,12 @@ import axios from "axios";
 
 const Container = styled.div`
     display: flex;
-    padding: 20px;
+    padding: 15px;
     justify-content: space-between;
-    
 `
 
 const ProductsMainPage = () => {
 
-    //fetch only one product cuz we don't have more xd 
   const [products,setProducts] = useState([]);
   
   const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
@@ -23,42 +21,28 @@ const ProductsMainPage = () => {
   useEffect(() =>{
     const getProducts = async () => {
       try{
-        const res = await axiosInstance.get("/products/find/644bfdbd1e6cf16bf1a9b361");  //TODO CHECK THIS ID 2 axios check
+        const res = await axiosInstance.get("/products");  //TODO CHECK THIS ID 2 axios check
   
         setProducts(res.data);
+        
       }
       catch (err){console.log(err)}
     };
-    getProducts();
-    //BASE64 to image 
-    // console.log(products);
-    // const image = new Image();
-    //   products.map(item => (
-        
-    //     image.src = 'data:image/png;base64,iVBORw0K...';
-    //     item.img = await `data:image/jpg;base64,${item.img}`
-    
-    //  ))
+    getProducts(); 
   },[])
   
 
   return (
-   <Container>
   
-    {products.map(item => (
-     // item.img = `data:image/png;base64,${item.img}`
-      // var image = new Image();
-    //  image.src = 'data:image/png;base64,iVBORw0K...';
-    //  document.body.appendChild(image);
-    
-      item.id === 2 && isMobile  ?
-        <ProductsMainPageItem item={item}/> 
-        : !isMobile ? <ProductsMainPageItem item={item}/> 
-        : ""
-      
+   <Container>
+{/* kolejnosc id jest tutaj wazna ze wzgledu na umiejscowienie zdjecia bluzy */}
+
+  {products.map(item => (
+  
+        <ProductsMainPageItem item={item} key={item.id}/> 
     ))}
    </Container>
-  )
-}
+  );
+};
 
 export default ProductsMainPage
