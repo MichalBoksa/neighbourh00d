@@ -8,10 +8,6 @@ const OrderSchema = new mongoose.Schema(
                     type:String,
                     required:true
                 },
-                surname:{
-                    type:String,
-                    required:true
-                },
                 email:{
                     type:String,
                     required:true
@@ -20,7 +16,11 @@ const OrderSchema = new mongoose.Schema(
                     type:String,
                     required:true
                 },
-                street:{
+                addressLine1:{
+                    type:String,
+                    required:true
+                },
+                addressLine2:{
                     type:String,
                     required:true
                 },
@@ -33,10 +33,6 @@ const OrderSchema = new mongoose.Schema(
                     required:true
                 },
                 country:{
-                    type:String,
-                    required:true
-                },
-                additionalInfo:{
                     type:String,
                     required:true
                 },

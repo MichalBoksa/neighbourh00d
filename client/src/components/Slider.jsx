@@ -11,6 +11,7 @@ height: 80vh;
 display: flex;
 position: relative;
 overflow: hidden;
+padding-top:0.5em;
  ${mobile({height: "65vh", width: "95vw"})}
 `; 
 
@@ -35,9 +36,7 @@ z-index: 2;
 
 const Wrapper = styled.div`
 height: 100%;
-margin-top: 1.5vh;
 display: flex;
-
 transition: all 1.5s ease;
 transform: translateX(${(props)=>props.slideIndex * - 100}vw);
 `;

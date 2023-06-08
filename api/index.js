@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const orderRoute = require("./routes/order");
 const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
+const stripeRoute = require("./routes/stripe");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 
@@ -21,6 +22,8 @@ app.use(express.json());
 app.use("/api/orders", orderRoute);
 app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
+app.use("/api/checkout", stripeRoute);
+// app.use("/api/checkout/session/:sessionId", stripeRoute);
 
 app.listen(process.env.PORT || 8800, ()=>{
     console.log("Backend server is running!");

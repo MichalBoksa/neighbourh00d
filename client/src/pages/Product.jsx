@@ -124,7 +124,7 @@ export const Product = () => {
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
-  const [size, setSize] = useState("");
+  const [size, setSize] = useState("S");
   const dispatch = useDispatch();
 
   const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });

@@ -1,76 +1,82 @@
 import styled  from "styled-components";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import img from '../images/hoodieCart.jpg';
+import CheckoutForm from "../components/CheckoutForm";
 import { Add, Remove } from "@material-ui/icons";
 import {mobile} from '../responsive';
 import { useSelector } from "react-redux";
 
+const KEY = process.env.REACT_APP_STRIPE_KEY_PUBLIC;
 const Container = styled.div`
 
 `;
 
 const Wrapper = styled.div`
     display:flex;
+    flex-direction:"column";
     justify-content:space-between;
-    margin-top:10px;
+    margin:10px 0px 15px;
     ${mobile({padding:"10px",flexDirection:"column"})} 
 `;
 
 
-const CustomerSaleData = styled.div`
-display:flex;
-margin-left: 20px;
-min-width:40%;
-border: 0.5px solid lightgray;
-border-radius: 5px;
-margin-bottom:20px;
-flex-direction:column;
-height:fit-content;
-justify-content: center;
-`;
+// const CustomerSaleData = styled.div`
+// display:flex;
+// margin-left: 20px;
+// min-width:40%;
+// border: 0.5px solid lightgray;
+// border-radius: 5px;
+// margin-bottom:20px;
+// flex-direction:column;
+// height:fit-content;
+// justify-content: center;
+// `;
 
-const Form = styled.form`
+// const Form = styled.form`
 
-`;
+// `;
 
-const CustomerSaleDataTitle = styled.h1`
-    display: flex;
-    font-size:24px;
-    font-weight:20px;
-    justify-content: center;
-`;
+// const CustomerSaleDataTitle = styled.h1`
+//     display: flex;
+//     font-size:24px;
+//     font-weight:20px;
+//     justify-content: center;
+// `;
 
-const Input = styled.input`
-display:flex;
-padding: 10px;
-margin:15px 5px 15px 20px;
-margin-left:auto;
-margin-right:auto;
-min-width: 80%;
-${mobile({minWidth: "60%"})} 
+// const Input = styled.input`
+// display:flex;
+// padding: 10px;
+// margin:15px 5px 15px 20px;
+// margin-left:auto;
+// margin-right:auto;
+// min-width: 80%;
+// ${mobile({minWidth: "60%"})} 
 
-`;
-const Button = styled.button`
-    width:40%;
-    justify-items:end;
-    margin:30px 15px 15px 10px;
-    padding: 10px;
-    background-color: black;
-    color:white;
-    font-weight:600;
-    margin-left: auto; 
-margin-right: 10 px; 
-`;
+// `;
+// const Button = styled.button`
+//     width:40%;
+//     justify-items:end;
+//     margin:30px 15px 15px 10px;
+//     padding: 10px;
+//     background-color: black;
+//     color:white;
+//     font-weight:600;
+//     margin-left: auto; 
+//     margin-right: 10 px;
+//      cursor: pointer;
+// `;
 
 const OrderSummary = styled.div`
-    flex:3;
+    flex:2;
+    display:flex;
+    ${mobile({marginLeft:"auto", marginRight:"auto"})} 
 `;
 
 const ProductList = styled.div`
- border: 0.5px solid lightgray;
- border-radius: 5px;
+ /* border: 0.5px solid lightgray;
+ border-radius: 5px; */
  padding:10px;
+ width:60vw;
 `;
 
 const Product = styled.div`
@@ -141,13 +147,12 @@ const Summary = styled.div`
     border: 0.5px solid lightgray;
     border-radius: 5px;
     padding: 20px;
-    height:30vh;
-    margin: 40px 0px;
+    height:320px;
+    margin: 10px 0px;
     `;
 
 const SummaryTitle = styled.h1`
     font-weight: 20px;
-     
 `;
 
 const SummaryItem = styled.div`
@@ -169,8 +174,23 @@ const SummaryItemPrice = styled.span`
 
 
 export const Cart = () => {
+    const cart = useSelector(state=>state.cart);
+   // const [quantity, setQuantity] = useState(cart.);
 
-    const cart = useSelector(state=>state.cart)
+    // console.log(cart.products)
+    // const handleQuantity = (type) =>{
+    //     if (type === "desc"){ quantity > 1 && setQuantity(quantity-1);}
+          
+    //     else if (type === "inc")
+    //         setQuantity(quantity+1)
+    //   }
+    
+    
+    //   const handleClick = ()=>{
+    //     dispatch(addProduct({...product, quantity, size}));
+    //   };
+    
+
   return (
     <Container>
         <Navbar/>
@@ -197,11 +217,14 @@ export const Cart = () => {
                             </Product><Hr /></>
                         ))
                         }
-                    
-                       
                     </ProductList>
-                    <Summary>
+             
+                  
+                </OrderSummary>
+
+                <Summary>
                         <SummaryTitle>PODSUMOWANIE</SummaryTitle>
+                        
                         <SummaryItem>
                             <SummaryItemText type="total">KWOTA</SummaryItemText>
                             <SummaryItemPrice>{cart.total} zł</SummaryItemPrice>
@@ -211,27 +234,14 @@ export const Cart = () => {
                             <SummaryItemPrice>15 zł</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
-                            <SummaryItemText type="total">KWOTA DO ZAPŁATY</SummaryItemText>
+                            <SummaryItemText type="total"><b>KWOTA DO ZAPŁATY</b></SummaryItemText>
                             <SummaryItemPrice>{cart.total} zł + dostawa </SummaryItemPrice>
                         </SummaryItem>
+                        <Hr/>
+                       <SummaryItem> 
+                        <CheckoutForm cartItems={cart.products}/>
+                        </SummaryItem>
                     </Summary>
-                </OrderSummary>
-                <CustomerSaleData>
-                    <CustomerSaleDataTitle>DANE DO WYSYŁKI</CustomerSaleDataTitle> 
-                        <Form>
-                            <Input placeholder="name"/>
-                            <Input placeholder="last name"/>
-                            <Input placeholder="email"/>
-                            <Input placeholder="phone number"/>
-                            <Input placeholder="street"/>
-                            <Input placeholder="city"/>
-                            <Input placeholder="zip code"/>
-                            <Input placeholder="country"/>
-                            <Input placeholder="additional info"/>
-                            {/* TODO agreement, button */}
-                        </Form>
-                        <Button> PRZEJDŹ DO PŁATNOŚCI</Button>
-                </CustomerSaleData>
             </Wrapper>
         <Footer/>
     </Container>
