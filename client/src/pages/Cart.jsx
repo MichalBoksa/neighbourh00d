@@ -172,9 +172,9 @@ const SummaryItemPrice = styled.span`
 
 `;
 
-
 export const Cart = () => {
     const cart = useSelector(state=>state.cart);
+    
    // const [quantity, setQuantity] = useState(cart.);
 
     // console.log(cart.products)

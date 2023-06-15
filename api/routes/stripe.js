@@ -15,7 +15,7 @@ router.post("/payment", async (req,res) =>{
                   images: [item.img],
                   description: item.desc,
                   metadata: {
-                    id: item._id,
+                    id: item.id,
                   },
                 },
                 unit_amount: item.price * 100,
@@ -60,13 +60,13 @@ router.post("/payment", async (req,res) =>{
         mode:"payment",
         locale:"pl",
         success_url:`${process.env.CLIENT_URL}/checkoutSuccess?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url:`${process.env.CLIENT_URL}/cart`,
+        cancel_url:`${process.env.CLIENT_URL}/`,
     });
 
     res.send({url:session.url});
 });
 
-router.get('/session/:session', async (req, res) => {
+router.get('/sessions/:session', async (req, res) => {
 try{
   const sessionRes = await stripe.checkout.sessions.retrieve(req.params.session);
    res.status(200).json(sessionRes);
@@ -76,5 +76,16 @@ catch(err){
 }
  
 });
+
+router.get('/sessions/:session/line_items', async (req, res) => {
+  try{
+    const sessionRes = await stripe.checkout.sessions.listLineItems(req.params.session);
+     res.status(200).json(sessionRes);
+  }
+  catch(err){
+    res.status(500).json(err);
+  }
+   
+  });
 
 module.exports = router;

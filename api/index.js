@@ -19,6 +19,7 @@ mongoose
 });
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/api/orders", orderRoute);
 app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);

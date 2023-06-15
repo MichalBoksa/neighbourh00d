@@ -12,7 +12,6 @@ const router = require("express").Router();
 router.post("/", async (req,res)=>{
     
     const newProduct = new Product(req.body);
-    console.log(req.body);
     try{
         const savedProduct = await newProduct.save();
         
