@@ -91,6 +91,7 @@ const LogoImage = styled.img`
 
 const Navbar = () => {
   const quantity = useSelector(state=>state.cart.quantity);
+  const cart = useSelector(state=>state.cart);
 
   return (
     <Container>
@@ -109,13 +110,25 @@ const Navbar = () => {
             <Right>
               {/* <MenuItem>REGISTER</MenuItem>
               <MenuItem>LOGIN</MenuItem> */}
-              <Link to="/cart">
+              {
+                cart.products.length < 1?
+              <Link to="/cart" style={cart.products.length < 1 ? {pointerEvents: "none"} : null} 
+                      onClick={ (event) => event.preventDefault()}>
                 <MenuItem>
                   <Badge badgeContent={quantity} color='primary'>
                     <ShoppingCartOutlined ></ShoppingCartOutlined> 
                   </Badge>
                 </MenuItem>
               </Link>
+              :
+              <Link to="/cart" style={cart.products.length < 1 ? {pointerEvents: "none"} : null} >
+                <MenuItem>
+                  <Badge badgeContent={quantity} color='primary'>
+                    <ShoppingCartOutlined ></ShoppingCartOutlined> 
+                  </Badge>
+                </MenuItem>
+              </Link>
+}
             </Right>
         </Wrapper>
     </Container>

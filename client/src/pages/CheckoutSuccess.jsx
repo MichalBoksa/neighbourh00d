@@ -42,14 +42,14 @@ const CheckoutSuccess = () => {
   //TODO CHANGE API TO SERVER ONE
   
   const fetchData = async () => {
-    if(sessionId !== undefined && sessionId !== null && sessionId.length > 0&& lineItems.length > 0 && checkoutInfo.length > 0 &&
-      lineItems !== undefined && checkoutInfo !== undefined)
+    if(sessionId.length > 0 &&sessionId !== undefined && sessionId !== null )
     try{
-      const {data: resLineItems} =  await axios.get("http://localhost:8800/api/checkout/sessions/" + sessionId + "/line_items");
-      setLineItems(resLineItems);
-
+      
       const {data: res} =  await axios.get("http://localhost:8800/api/checkout/sessions/" + sessionId);
       setCheckoutInfo(res);
+
+      const {data: resLineItems} =  await axios.get("http://localhost:8800/api/checkout/sessions/" + sessionId + "/line_items");
+      setLineItems(resLineItems);
 
     }
     catch (error) {
@@ -62,7 +62,9 @@ const CheckoutSuccess = () => {
   useEffect(() =>{
     const createOrder = async () => {
       //TODO ENDPOINT TO SERVER ONE
-     if(lineItems !== null && checkoutInfo !== null ){
+      console.log(checkoutInfo);
+     if( lineItems !== null && checkoutInfo !== null &&
+      lineItems !== undefined && checkoutInfo !== undefined ){
       try{
        //TODO ENDPOINT TO SERVER ONE
      await axios.post("http://localhost:8800/api/orders",{

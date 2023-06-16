@@ -26,7 +26,7 @@ const ProductsMainPage = () => {
         setProducts(res.data);
         
       }
-      catch (err){console.log(err)}
+      catch(err){console.log(err)}
     };
     getProducts(); 
   },[])

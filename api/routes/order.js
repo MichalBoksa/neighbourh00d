@@ -11,7 +11,6 @@ const router = require("express").Router();
 //CREATE
 //TODO deleted verifyToken check if important
 router.post("/", async (req,res)=>{
-     console.log(req.body);
     const newOrder = new Order(req.body);
     
     try{

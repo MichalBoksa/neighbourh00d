@@ -5,6 +5,8 @@ import CheckoutForm from "../components/CheckoutForm";
 import { Add, Remove } from "@material-ui/icons";
 import {mobile} from '../responsive';
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import {increaseProductQuantity, decreaseProductQuantity } from "../redux/cartRedux";
 
 const KEY = process.env.REACT_APP_STRIPE_KEY_PUBLIC;
 const Container = styled.div`
@@ -174,21 +176,23 @@ const SummaryItemPrice = styled.span`
 
 export const Cart = () => {
     const cart = useSelector(state=>state.cart);
-    
-   // const [quantity, setQuantity] = useState(cart.);
+    const dispatch = useDispatch();
+//    const [quantity, setQuantity] = useState(cart.);
 
-    // console.log(cart.products)
-    // const handleQuantity = (type) =>{
-    //     if (type === "desc"){ quantity > 1 && setQuantity(quantity-1);}
+    console.log(cart.products)
+    const handleQuantity = (type, index) =>{
+        if (type === "desc"){
+            cart.products.at(index).quantity > 1 && dispatch(decreaseProductQuantity({ index}));
+            }
           
-    //     else if (type === "inc")
-    //         setQuantity(quantity+1)
-    //   }
+        else if (type === "inc")
+        dispatch(increaseProductQuantity({ index}));
+      }
     
     
-    //   const handleClick = ()=>{
-    //     dispatch(addProduct({...product, quantity, size}));
-    //   };
+      const handleClick = ()=>{
+        dispatch(addProduct({...product, quantity, size}));
+      };
     
 
   return (
@@ -197,8 +201,8 @@ export const Cart = () => {
             <Wrapper>
                 <OrderSummary>
                     <ProductList>
-                        {cart.products.map(product => ( 
-                        <><Product>
+                        {cart.products.map((product,index) => ( 
+                        <><Product id ={index}>
                                 <ProductDetail>
                                     <Image src={product.img}></Image>
                                     <Details>
@@ -208,9 +212,9 @@ export const Cart = () => {
                                 </ProductDetail>
                                 <PriceDetail>
                                     <ProductAmountContainer>
-                                        <Add />
+                                        <Add onClick={() => handleQuantity("inc",index)}/>
                                         <ProductAmount>{product.quantity}</ProductAmount>
-                                        <Remove />
+                                        <Remove onClick={() => handleQuantity("desc", index)} />
                                     </ProductAmountContainer>
                                     <ProductPrice> {product.price * product.quantity} zł</ProductPrice>
                                 </PriceDetail>
