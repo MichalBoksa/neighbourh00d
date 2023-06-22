@@ -113,8 +113,8 @@ const CheckoutSuccess = () => {
         <Navbar/>
         <Wrapper>
             <Info>
-        <h2>Twoje zamówienie zostało złożone!</h2>
-        <p>Potwierdzenie zamówienia wraz z rachunkiem zostało wysłane na podany wcześniej adres email</p>
+        <h2>Twoja płatność nie powiodła się</h2>
+        <p>Spróbuj jeszcze raz!</p>
         <p>
             W razie pytań prosimy o wiadomość na adres {" "}
             <strong>support@nbhd.com</strong>

@@ -60,7 +60,7 @@ router.post("/payment", async (req,res) =>{
         mode:"payment",
         locale:"pl",
         success_url:`${process.env.CLIENT_URL}/checkoutSuccess?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url:`${process.env.CLIENT_URL}/`,
+        cancel_url:`${process.env.CLIENT_URL}/checkoutFailed`,
     });
 
     res.send({url:session.url});

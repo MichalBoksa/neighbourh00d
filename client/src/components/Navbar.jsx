@@ -108,14 +108,13 @@ const Navbar = () => {
               </Link>
             </Center>
             <Right>
-              {/* <MenuItem>REGISTER</MenuItem>
-              <MenuItem>LOGIN</MenuItem> */}
+
               {
                 cart.products.length < 1?
               <Link to="/cart" style={cart.products.length < 1 ? {pointerEvents: "none"} : null} 
                       onClick={ (event) => event.preventDefault()}>
                 <MenuItem>
-                  <Badge badgeContent={quantity} color='primary'>
+                  <Badge overlap="rectangular" badgeContent={quantity} color='primary'>
                     <ShoppingCartOutlined ></ShoppingCartOutlined> 
                   </Badge>
                 </MenuItem>
@@ -123,7 +122,7 @@ const Navbar = () => {
               :
               <Link to="/cart" style={cart.products.length < 1 ? {pointerEvents: "none"} : null} >
                 <MenuItem>
-                  <Badge badgeContent={quantity} color='primary'>
+                  <Badge overlap="rectangular" badgeContent={quantity} color='primary'>
                     <ShoppingCartOutlined ></ShoppingCartOutlined> 
                   </Badge>
                 </MenuItem>

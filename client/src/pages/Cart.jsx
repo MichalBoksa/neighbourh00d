@@ -179,7 +179,6 @@ export const Cart = () => {
     const dispatch = useDispatch();
 //    const [quantity, setQuantity] = useState(cart.);
 
-    console.log(cart.products)
     const handleQuantity = (type, index) =>{
         if (type === "desc"){
             cart.products.at(index).quantity > 1 && dispatch(decreaseProductQuantity({ index}));
